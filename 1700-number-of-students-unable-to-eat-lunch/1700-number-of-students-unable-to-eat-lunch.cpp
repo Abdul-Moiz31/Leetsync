@@ -1,11 +1,32 @@
 class Solution {
 public:
-    int countStudents(vector<int>& A, vector<int>& B) {
-        int count[] = {0,0} , n = A.size(), k;
-        for(int a :A)
-        count[a]++;
-        for(k = 0 ; k<n && count[B[k]] > 0 ; k++)
-        count[B[k]]--;
-        return n-k;
+    int countStudents(vector<int>& Stu, vector<int>& Sw) {
+        queue<int> StuQ;
+        stack<int> sandS;
+
+        for (int s : Stu) {
+            StuQ.push(s);
+        }
+        for (int i = Sw.size() - 1; i >= 0; i--) {
+            sandS.push(Sw[i]);
+        }
+
+        int cnt = 0;
+        int n = Stu.size();
+        while (!StuQ.empty() && !sandS.empty()) {
+            if (StuQ.front() == sandS.top()) {
+                StuQ.pop();
+                sandS.pop();
+                cnt = 0;
+            } else {
+                StuQ.push(StuQ.front());
+                StuQ.pop();
+                cnt++;
+            }
+            if (cnt == n){ 
+            break; 
+          }
+        }
+        return StuQ.size();
     }
 };
