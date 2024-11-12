@@ -1,15 +1,15 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-       unordered_set<int>dup;
+    unordered_set<int>seen;
 
-       for(int num: nums){
-        if(dup.find(num) != dup.end(num)){
+    for (int num : nums){
+        if(seen.find(num) != seen.end()){
             return true ;
         }
-        dup.insert(num);
-       }
-       return false; 
-
-       }
+        seen.insert(num);
+    }
+    return false;
+    
+    }
 };
