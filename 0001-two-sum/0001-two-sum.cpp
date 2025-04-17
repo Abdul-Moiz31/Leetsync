@@ -1,17 +1,28 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-    map<int, int>mp;
+        // Brute Force
+        // int n = nums.size();
+        // for (int i = 0; i < n; i++) {
+        //     for (int j = i + 1; j < n; j++) {
+        //         if (nums[i] + nums[j] == target) {
+        //             return {i, j};
+        //         }
+        //     }
+        // }
+        // return {};
 
-    for(int i = 0 ; i<nums.size() ; i++){
-        int num = nums[i];
-        int Sol = target - num;
-        if(mp.find(Sol) != mp.end()){
-            return {mp[Sol] , i};
+         // Better - Hasmap
+         unordered_map<int , int>mp;
+         int n = nums.size();
+         for(int i = 0 ; i<n ; i++){
+            int a = target - nums[i];
+            if(mp.find(a) != mp.end()){
+                return {mp[a], i};
+            }
+           mp[nums[i]] = i; 
         }
-        mp[num] = i;
-    }
-    return {-1 , -1};
-    
+
+        return {};
     }
 };
