@@ -41,8 +41,6 @@ public:
             group1 = group3;
         }
 
-        ListNode* result = dummy->next;
-        delete dummy;
-        return result;
+        return dummy->next;
     }
 };
