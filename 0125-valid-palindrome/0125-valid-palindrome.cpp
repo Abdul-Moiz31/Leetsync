@@ -1,17 +1,18 @@
 class Solution {
 public:
+    bool func(string& s, int left, int right) {
+       
+        while (left < right && !isalnum(s[left])) left++;
+        while (left < right && !isalnum(s[right])) right--;
+       
+        if (left >= right) return true;
+
+        if (tolower(s[left]) != tolower(s[right])) return false;
+
+        return func(s, left + 1, right - 1);
+    }
+
     bool isPalindrome(string s) {
-        int l = 0 , r=s.size()-1;
-
-        while(l<r){
-            while(l<r  && !isalnum(s[l])) l++;
-            while(l<r  && !isalnum(s[r])) r--;
-
-            if(tolower(s[l]) != tolower(s[r]))
-            return false ;
-            l++;
-            r--;
-        }
-        return true;
+        return func(s, 0, s.size() - 1);
     }
 };
