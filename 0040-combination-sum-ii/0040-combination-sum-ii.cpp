@@ -1,28 +1,36 @@
 class Solution {
 public:
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        
-    }class Solution {
-    void combine(vector<int> &cand, int tar, vector<int> &vec, vector<vector<int>> &res, int i, int n){
-        if(tar < 0) return;
-        if(tar == 0){
-            res.push_back(vec);
-            return;
-        }
-        for(int j = i; j < n; j++){
-            if(j > i && cand[j] == cand[j-1]) continue; 
-            vec.push_back(cand[j]);
-            combine(cand, tar - cand[j], vec, res, j + 1, n);
-            vec.pop_back();
-        }
+    
+    void getUniqueCombinations(vector<int>& arr, int target , int i , vector<int>& combine , vector<vector<int>>& ans){
+      if( target == 0){
+    ans.push_back(combine);
+    return ;
+}
+    if (i== arr.size() || target < 0 ) return;
+ 
+  
+   // check
+   if(i > 0 && arr[i] == arr[i-1]){
+     return ;
     }
-public:
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+
+    combine.push_back(arr[i]);
+
+    getUniqueCombinations(arr , target - arr[i] , i+1 , combine , ans);
+    combine.pop_back();
+    getUniqueCombinations(arr , target , i+1 , combine , ans);
+
+
+}
+    
+    vector<vector<int>> combinationSum2(vector<int>& arr, int target) {
+        sort(arr.begin() , arr.end());
+        vector<int> combine;
         vector<vector<int>> ans;
-        vector<int> vec;
-        sort(candidates.begin(), candidates.end());
-        combine(candidates, target, vec, ans, 0, candidates.size());
+
+        getUniqueCombinations(arr , target , 0, combine , ans);
+
         return ans;
+
     }
-};
 };
