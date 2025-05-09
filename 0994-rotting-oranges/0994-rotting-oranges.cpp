@@ -1,37 +1,51 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-         if(grid.empty()) return 0;
-        int m = grid.size(); 
-        int n = grid[0].size(); 
-        int days = 0, tot = 0, cnt = 0;
-        queue<pair<int, int>> rotten;
-        for(int i = 0; i < m; ++i){
-            for(int j = 0; j < n; ++j){
-                if(grid[i][j] != 0) tot++;
-                if(grid[i][j] == 2) rotten.push({i, j});
-            }
-        }
-        
-        int dx[4] = {0, 0, 1, -1};
-        int dy[4] = {1, -1, 0, 0};
-        
-        while(!rotten.empty()){
-            int k = rotten.size();
-            cnt += k; 
-            while(k--){
-                int x = rotten.front().first, y = rotten.front().second;
-                rotten.pop();
-                for(int i = 0; i < 4; ++i){
-                    int nx = x + dx[i], ny = y + dy[i];
-                    if(nx < 0 || ny < 0 || nx >= m || ny >= n || grid[nx][ny] != 1) continue;
-                    grid[nx][ny] = 2;
-                    rotten.push({nx, ny});
+        int n = grid.size();
+        int m = grid[0].size();
+        // {{r , c} , t}
+        queue < pair<pair<int, int>,int>> q;
+        vector<vector<int>> vis(n, vector<int>(m, 0));
+        int cntFresh = 0;
+        for (int i = 0 ; i < n; i++) {
+            for (int j = 0 ; j < m; j++) {
+                if (grid[i][j] == 2) {
+                    q.push({{i, j}, 0});
+                    vis[i][j] = 2;
+                } else {
+                    vis[i][j] = 0;
+                }
+                if (grid[i][j] == 1) {
+                    cntFresh++;
                 }
             }
-            if(!rotten.empty()) days++;
         }
-        
-        return tot == cnt ? days : -1;
+
+        int time = 0;
+        int drow[] = {-1, 0, 1, 0};
+        int dcol[] = {0, 1, 0, -1};
+        int cnt = 0;
+        while (!q.empty()) {
+            int row = q.front().first.first;
+            int col = q.front().first.second;
+            int tm = q.front().second;
+            time = max(time, tm);
+            q.pop();
+
+            for (int i = 0; i < 4; i++) {
+                int nrow = row + drow[i];
+                int ncol = col + dcol[i];
+                if (nrow >= 0 && nrow < n && ncol >= 0 && ncol < m &&
+                    vis[nrow][ncol] == 0 && grid[nrow][ncol] == 1) {
+                    q.push({{nrow, ncol}, tm + 1});
+                    vis[nrow][ncol] = 2;
+                    cnt++;
+                }
+            }
+        }
+        if (cnt != cntFresh)
+            return -1;
+
+        return time;
     }
 };
