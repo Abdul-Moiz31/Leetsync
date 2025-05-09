@@ -31,9 +31,10 @@ public:
         Node* copy = new Node(node->val);
         cloned[node] = copy;
 
-        for(Node* neighbor : node->neighbors){
-            copy->neighbors.push_back(cloneGraph(neighbor));
-        }
+        for (int i = 0; i < node->neighbors.size(); ++i) {
+        Node* neighbor = node->neighbors[i];
+        clone->neighbors.push_back(cloneGraph(neighbor));
+}
         return copy;
     }
 };
