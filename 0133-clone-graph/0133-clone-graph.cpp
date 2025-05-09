@@ -21,17 +21,19 @@ public:
 
 class Solution {
 public:
-    unordered_map<Node* , Node*> cloned;
+    unordered_map<Node*, Node*> cloned;
     Node* cloneGraph(Node* node) {
-        if(node == nullptr) return nullptr;
+        if (node == nullptr)
+            return nullptr;
 
-        if(cloned.find(node) != cloned.end()){
+        if (cloned.find(node) != cloned.end()) {
             return cloned[node];
         }
         Node* copy = new Node(node->val);
         cloned[node] = copy;
 
-        for(Node* neighbor : node->neighbors){
+        for (int i = 0; i < node->neighbors.size(); ++i) {
+            Node* neighbor = node->neighbors[i];
             copy->neighbors.push_back(cloneGraph(neighbor));
         }
         return copy;
