@@ -35,8 +35,7 @@ public:
             for (int i = 0; i < 4; i++) {
                 int nrow = row + drow[i];
                 int ncol = col + dcol[i];
-                if (nrow >= 0 && nrow < n && ncol >= 0 && ncol < m &&
-                    vis[nrow][ncol] == 0 && grid[nrow][ncol] == 1) {
+                if (nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && vis[nrow][ncol] == 0 && grid[nrow][ncol] == 1) {
                     q.push({{nrow, ncol}, tm + 1});
                     vis[nrow][ncol] = 2;
                     cnt++;
