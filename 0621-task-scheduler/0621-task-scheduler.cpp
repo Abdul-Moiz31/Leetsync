@@ -1,22 +1,42 @@
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
-        int task_based_answer = tasks.size();
-        unordered_map<char, int> task_counts;
-        int max_count = 0;
-        int max_count_tasks = 0;
-        for (auto task : tasks) {
-            task_counts[task]++;
-            if (task_counts[task] > max_count) {
-                max_count = task_counts[task];
-                max_count_tasks = 1;
-            } else if (task_counts[task] == max_count) {
-                max_count_tasks++;
+        unordered_map<char, int> freq;
+        for (char task : tasks) {
+            freq[task]++;
+        }
+
+        priority_queue<int> maxHeap;
+        for (auto [task, count] : freq) {
+            maxHeap.push(count);
+        }
+
+        int time = 0;
+
+        while (!maxHeap.empty()) {
+            int cycle = n + 1;
+            vector<int> temp;
+
+            int tasksProcessed = 0;
+            for (int i = 0; i < cycle && !maxHeap.empty(); ++i) {
+                int count = maxHeap.top(); maxHeap.pop();
+                if (--count > 0) {
+                    temp.push_back(count);
+                }
+                time++;
+                tasksProcessed++;
+            }
+
+            for (int count : temp) {
+                maxHeap.push(count);
+            }
+
+            // Add idle time only if there are tasks left
+            if (!maxHeap.empty()) {
+                time += (cycle - tasksProcessed);
             }
         }
-        
-        int count_based_answer = (max_count - 1) * (n + 1) + max_count_tasks;
 
-        return max(count_based_answer, task_based_answer);
+        return time;
     }
 };
