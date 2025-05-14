@@ -17,7 +17,7 @@ public:
         }
 
         vector<vector<int>> result;
-        while (maxHeap.empty()) {
+        while (!maxHeap.empty()) {
             result.push_back(maxHeap.top().second);
             maxHeap.pop();
         }
