@@ -1,18 +1,20 @@
 class Solution {
 public:
     double myPow(double x, int n) {
-        if (n < 0)
-            return 1 / myPow(x, -n);
-
-        if (n == 0)
+        long long N = n;
+        if (N < 0) {
+            x = 1 / x;
+            N = -N;
+        }
+        if (N == 0)
             return 1; // Base
 
-        if (n % 2 == 0) {
-            return myPow(x * x, n / 2);
+        if (N % 2 == 0) {
+            return myPow(x * x, N / 2);
         } // evben
 
         else {
-            return x * myPow(x, n - 1);
+            return x * myPow(x, N - 1);
         }
     }
 };
