@@ -1,23 +1,24 @@
 class Solution {
 public:
-    string multiply(string n1, string n2) {
-        int a = n1.size(); 
-        int b = n2.size(); 
-        string res(a+b, '0');  
-        for(int i=a-1; i>=0; i--) {  
-            for(int j=b-1; j>=0; j--) {
-                int di = (n1[i] - '0') * (n2[j] - '0') + (res[i+j+1]-'0');
-                res[i+j+1] = di % 10 + '0';
-                res[i+j] += di/10;
+    string multiply(string num1, string num2) {
+        if(num1 == "0" || num2 == "0") return "0";
+
+        vector<int> num(num1.size() + num2.size() , 0);
+        // Simple Multiplication we do on paper
+         for(int i = num1.size() -1 ; i>=0 ;i--){
+            for(int j = num2.size()-1 ; j >=0 ; j--){
+                num[i+j+1] += (num1[i] -'0') * (num2[j] -'0');
+                num[i+j] += num[i+j+1]/10;
+                num[i+j+1] %= 10;
             }
-        }
+         }
+         // Skip leading zeros
+         int  i = 0;
+         while(i < num.size() && num[i] == 0) i++;
+        // converting into string
+         string res="";
+         while(i <num.size()) res.push_back(num[i++] + '0');
 
-        for(int i=0; i<res.size(); i++) {
-            if(res[i]!='0') return res.substr(i);
-        }
-        return "0";
-
+         return res;
     }
 };
-
-
