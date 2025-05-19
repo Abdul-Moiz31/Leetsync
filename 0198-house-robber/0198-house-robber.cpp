@@ -1,15 +1,19 @@
 class Solution {
 public:
-    int rob(vector<int>& nums) {
-        int n = nums.size();
-        if(n==0) return 0;
-        if(n==1) return nums[0];
-        vector<int>dp(n+1 , 0);
-        dp[1] = nums[0];
+    int helper(int index ,vector<int>& nums  , vector<int>& dp){
+        if(index == 0) return nums[index];
+        if(index < 0) return 0;
+        if(dp[index] != -1) return dp[index];
+        int pick = nums[index] + helper(index-2 , nums , dp);
+        int notpick = 0 + helper(index-1 , nums , dp);
 
-        for(int i = 2 ; i<=n ;i++){
-            dp[i] = max(dp[i-1] , dp[i-2] + nums[i-1]);
-        }
-        return dp[n];
+        return dp[index]= max(pick , notpick);
+    }
+
+    int rob(vector<int>& nums) {
+       int n = nums.size();
+       vector<int> dp(n , -1);
+       return helper(n -1 , nums , dp);
+
     }
 };
