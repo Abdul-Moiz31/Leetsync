@@ -20,7 +20,7 @@ public:
         }
         ListNode* dummy = new ListNode(0);
         ListNode* temp = dummy;
-        whie(!pq.empty()) {
+        while(!pq.empty()) {
             auto it = pq.top();
             pq.pop();
             if (it.second->next)
