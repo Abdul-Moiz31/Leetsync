@@ -25,7 +25,6 @@ public:
     Node* cloneGraph(Node* node) {
         if (node == nullptr)
             return nullptr;
-
         if (cloned.find(node) != cloned.end()) {
             return cloned[node];
         }
