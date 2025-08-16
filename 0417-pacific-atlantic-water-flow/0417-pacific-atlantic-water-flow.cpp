@@ -10,7 +10,7 @@ public:
         for(int  d= 0 ; d< 4 ; d++){
             int nrow = i + dx[d];
             int ncol = j + dy[d];
-            if(nrow >= 0 && ncol >= 0 && nrow < n && ncol < m && !visited[nrow][ncol] && heights[nrow][ncol] >= heights[i][j]){
+            if(nrow >= 0 && ncol >= 0 && nrow < n && ncol < m && visited[nrow][ncol] == 0 && heights[nrow][ncol] >= heights[i][j]){
             dfs(nrow , ncol , visited  , heights , n , m);
             }
         }
