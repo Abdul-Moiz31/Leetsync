@@ -6,20 +6,19 @@ public:
     ans.push_back(combine);
     return ;
 }
-    if (i== arr.size() || target < 0 ) return;
  
   
    // check
-   if(i > 0 && arr[i] == arr[i-1]){
-     return ;
-    }
+   for(int j = i ; j<arr.size() ; j++){
+    if(j > i  && arr[j] == arr[j-1])
+        continue;
+        if (arr[j] > target) break;
 
-    combine.push_back(arr[i]);
+    combine.push_back(arr[j]);
 
-    getUniqueCombinations(arr , target - arr[i] , i+1 , combine , ans);
+    getUniqueCombinations(arr , target - arr[j] , j+1 , combine , ans);
     combine.pop_back();
-    getUniqueCombinations(arr , target , i+1 , combine , ans);
-
+}
 
 }
     
