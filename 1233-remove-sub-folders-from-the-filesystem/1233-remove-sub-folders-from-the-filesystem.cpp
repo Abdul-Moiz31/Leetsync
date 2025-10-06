@@ -1,23 +1,31 @@
 class Solution {
 public:
-    vector<string> removeSubfolders(vector<string>& folders) {
-        sort(folders.begin(),folders.end());
-        vector<string>ans;
-        set<string>st;
-        for(auto folder:folders){
-             string parent="";
-             int i=0;
-            for(;i<folder.size();i++){
-                if(folder[i]=='/'&&parent.size()>0){
-                    if(!st.empty()&&st.find(parent)!=st.end())break;
-                }
-                parent+=folder[i];
-            }
-            if(i==folder.size()){
-                st.insert(folder);
-                ans.push_back(folder);
-            }
+    struct node{
+        unordered_map <char,node*> child;
+        bool end;
+    };
+    node *root;
+    bool subFolder(string s){
+        node *curr = root;
+        int n = s.size();
+        for(int i = 0 ; i < n ; i++){
+            char c = s[i];
+            if(c == '/' and curr -> end)
+                return true;
+            if(curr -> child[c] == nullptr)
+                curr -> child[c] = new node();
+            curr = curr -> child[c];
         }
+        curr -> end = true;
+        return false; 
+    }
+    vector<string> removeSubfolders(vector<string>& folder) {
+        sort(folder.begin() , folder.end()); // sort for processing lexicographically
+        root = new node();
+        vector <string> ans;
+        for(string &s : folder)
+            if(not subFolder(s))
+                ans.push_back(s);
         return ans;
     }
 };
