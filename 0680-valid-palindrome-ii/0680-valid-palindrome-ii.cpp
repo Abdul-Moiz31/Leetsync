@@ -1,29 +1,33 @@
 class Solution {
 public:
     bool validPalindrome(string s) {
-        int left= 0;
+        int left = 0;
         int right = s.size() - 1;
-        while(left < right){
-            if(s[left] != s[right]){
-              int left1 = left+1;
-              int right1 = right;
-              int left2 = left;
-              int right2 = right -1;
-              while(left1 <right1 && s[left1] == s[right1]){
-                left1++;
-                right1--;
-              } 
-              while(left2 <right2 && s[left2] == s[right2]){
-                left2++;
-                right2--;
-              } 
-              return left1 >= right1 || left2 >= right2;
-            
+
+        while (left < right) {
+            if (s[left] != s[right]) {
+                // Try skipping left character
+                int l1 = left + 1;
+                int r1 = right;
+                while (l1 < r1 && s[l1] == s[r1]) {
+                    l1++;
+                    r1--;
+                }
+
+                // Try skipping right character
+                int l2 = left;
+                int r2 = right - 1;
+                while (l2 < r2 && s[l2] == s[r2]) {
+                    l2++;
+                    r2--;
+                }
+
+                return l1 >= r1 || l2 >= r2;
             }
             left++;
             right--;
-
         }
+
         return true;
     }
 };
