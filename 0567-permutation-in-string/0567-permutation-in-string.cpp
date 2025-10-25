@@ -13,15 +13,15 @@ public:
             hashs1[s1[left] - 'a']++;
         }
 
-        for (int left = 0; left < s2Len; left++) {
-            hashs2[s2[left] - 'a']++;
+        for (int right = 0; right < s2Len; right++) {
+            hashs2[s2[right] - 'a']++;
 
-            if (left >= s1Len) {
-                hashs2[s2[left - s1Len] - 'a']--;
-                
+            if (right >= s1Len) 
+                hashs2[s2[right - s1Len] - 'a']--;
+
                 if (hashs1 == hashs2) {
                     return true;
-                }
+
             }
         }
         return false;
